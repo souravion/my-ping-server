@@ -6,6 +6,12 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors()); // Allow all origins (adjust for security in prod)
 
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 30, // max 30 requests per IP per minute
+  message: { error: 'Too many requests, please try again later.' },
+});
+
 app.get('/api/ping', (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   res.set('Pragma', 'no-cache');
