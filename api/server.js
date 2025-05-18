@@ -12,6 +12,9 @@ const limiter = rateLimit({
   message: { error: 'Too many requests, please try again later.' },
 });
 
+// Apply the rate limiter to /api/ping route only
+app.use('/api/ping', limiter);
+
 app.get('/api/ping', (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   res.set('Pragma', 'no-cache');
